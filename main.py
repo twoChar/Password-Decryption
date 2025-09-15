@@ -1,6 +1,8 @@
 import random
+import msoffcrypto
+import io
 
-# Simple PCFG rules
+# Simple PCFG grammar
 grammar = {
     "S": [("W D", 1.0)],   # Start → Word + Digit
     "W": [("hello", 0.3), ("love", 0.4), ("dragon", 0.3)],
@@ -13,8 +15,26 @@ def generate(symbol="S"):
     rules = grammar[symbol]
     parts, probs = zip(*rules)
     choice = random.choices(parts, weights=probs)[0]
-    return " ".join(generate(p) for p in choice.split())
+    return "".join(generate(p) for p in choice.split())
 
-# Generate passwords
+# Path to the password-protected file
+file_path = "Mock/Gc_PS7_Mock_test1.docx"
+
+# Try 5 passwords
 for _ in range(5):
-    print(generate().replace(" ", ""))
+    guessed_password = generate()
+    # print(f"Trying password: {guessed_password}")
+
+    try:
+        with open(file_path, "rb") as f:
+            office_file = msoffcrypto.OfficeFile(f)
+            office_file.load_key(password=guessed_password)
+
+            decrypted = io.BytesIO()
+            office_file.decrypt(decrypted)
+
+            # If no exception, password is correct
+            print(f"Success! Password is: {guessed_password}")
+            break
+    except Exception as e:
+        print(f"Failed with password: {guessed_password}")
