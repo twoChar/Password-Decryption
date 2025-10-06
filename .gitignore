@@ -1,3 +1,14 @@
 Data-Breach/
 .DS_Store
 passTLS/rockyou.txt
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Generated logs
+generation.log
+
+# Generated output directory (too large for git)
+output/
+
