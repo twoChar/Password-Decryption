@@ -1,6 +1,16 @@
+# Large training data files
 Data-Breach/rockyou.txt
-.DS_Store
+data/training/rockyou.txt
 passTLS/rockyou.txt
+
+# Large model files
+data/models/*.pkl
+
+# Generated candidates
+generated/*.txt
+
+# macOS
+.DS_Store
 
 # Python cache
 __pycache__/
@@ -8,7 +18,11 @@ __pycache__/
 
 # Generated logs
 generation.log
+*.log
 
 # Generated output directory (too large for git)
 output/
+
+# Results
+results/
 
