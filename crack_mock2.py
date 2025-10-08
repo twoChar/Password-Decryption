@@ -23,19 +23,28 @@ except ImportError:
 
 
 class PasswordCracker:
-    def __init__(self, wordlist_path, target_dir):
+    def __init__(self, wordlist_path, target_dir, min_length=6, max_length=12):
         self.wordlist_path = Path(wordlist_path)
         self.target_dir = Path(target_dir)
+        self.min_length = min_length
+        self.max_length = max_length
         self.results = []
         self.attempts = 0
 
     def load_passwords(self):
-        """Load passwords from wordlist file"""
+        """Load passwords from wordlist file and filter by length"""
         print(f"[*] Loading passwords from: {self.wordlist_path}")
+        print(f"[*] Filtering passwords: length {self.min_length}-{self.max_length} characters")
         try:
             with open(self.wordlist_path, 'r', encoding='utf-8', errors='ignore') as f:
-                passwords = [line.strip() for line in f if line.strip()]
-            print(f"[+] Loaded {len(passwords)} passwords")
+                all_passwords = [line.strip() for line in f if line.strip()]
+
+            # Filter by length
+            passwords = [p for p in all_passwords if self.min_length <= len(p) <= self.max_length]
+
+            print(f"[+] Loaded {len(all_passwords)} total passwords")
+            print(f"[+] Filtered to {len(passwords)} passwords (length {self.min_length}-{self.max_length})")
+            print(f"[+] Skipped {len(all_passwords) - len(passwords)} passwords outside length range")
             return passwords
         except Exception as e:
             print(f"[-] Error loading wordlist: {e}")

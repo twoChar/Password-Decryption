@@ -2,9 +2,19 @@
 
 This tool attempts to crack password-protected Office documents (DOCX, PPTX, XLSX) and PDF files using a wordlist.
 
+## Password Requirements
+
+Based on the target files:
+- **Length**: 6 to 12 characters
+- **Characters**: Alphanumeric + Symbols
+- **Patterns**: Human-like (names, dates, places)
+
+The script automatically filters passwords to match these criteria.
+
 ## Files
 
-- `crack_mock2.py` - Main cracking script
+- `crack_mock2.py` - Main cracking script (Python)
+- `crack_mock2.ipynb` - Interactive Jupyter notebook version
 - `setup.sh` - Installation script for dependencies
 - `requirements.txt` - Python package requirements
 - `indian-wordlist/all-indian.txt` - Password wordlist (15,018 passwords)
@@ -53,10 +63,12 @@ The script provides:
 
 ## Performance
 
-- Wordlist size: 15,018 passwords
+- Wordlist size: 15,018 total passwords
+- Filtered passwords: 13,784 (length 6-12 chars)
+- Skipped passwords: 1,234 (outside length range)
 - Target files: 25 files
-- Total combinations: 375,450
-- Expected time: Varies depending on system (typically 5-30 minutes)
+- Total combinations: 344,600 (13,784 × 25)
+- Expected time: Varies depending on system (typically 5-20 minutes)
 
 ## Example Output
 
@@ -65,16 +77,19 @@ The script provides:
 Password Cracking Tool - Mock2 Files
 ======================================================================
 [*] Loading passwords from: indian-wordlist/all-indian.txt
-[+] Loaded 15018 passwords
+[*] Filtering passwords: length 6-12 characters
+[+] Loaded 15018 total passwords
+[+] Filtered to 13784 passwords (length 6-12)
+[+] Skipped 1234 passwords outside length range
 [*] Scanning target directory: Files/Mock2
 [+] Found 15 Office files and 10 PDF files
 
 [*] Cracking: Gc_PS7_Mock2_test1.docx
-[*] Testing 15018 passwords...
+[*] Testing 13784 passwords...
 [+] SUCCESS! Password found for Gc_PS7_Mock2_test1.docx
-    Password: 123456
-    Attempts: 212
-    Time: 3.45 seconds
+    Password: password123
+    Attempts: 347
+    Time: 5.21 seconds
 ```
 
 ## Notes
